@@ -1,0 +1,56 @@
+
+
+# پایتون
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+
+# محیط مجازی
+venv/
+env/
+.env
+
+# فایل‌های موقت
+*.log
+*.pot
+*.py[cod]
+
+# دایرکتوری‌های مربوط به IDE
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# تنظیمات مربوط به سیستم عامل
+.DS_Store
+Thumbs.db
+
+# فایل‌های مربوط به تست
+.coverage
+.coverage.*
+nosetests.xml
+test_results/
+*.egg-info/
+dist/
+build/
+
+# فایل‌های مربوط به Docker (در صورت استفاده)
+docker-compose.override.yml
+Dockerfile
+docker-compose.yml
+*.dockerignore
+
+# فایل‌های امنیتی
+*.pem
+*.key
+
+# فایل‌های مربوط به پکیج‌های خاص
+*.egg
+*.whl
+
+# setting
+local_settings.py
+
