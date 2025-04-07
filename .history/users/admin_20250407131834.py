@@ -12,4 +12,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Country)
 class CountryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'is_active']    
+    list_display = ['name', 'is_active']
