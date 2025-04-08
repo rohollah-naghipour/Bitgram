@@ -136,12 +136,7 @@ REST_FRAMEWORK = {
     )
 }
 
-from datetime import timedelta
 
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
