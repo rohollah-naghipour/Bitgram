@@ -1,7 +1,18 @@
 from django.conf import settings
 from django.db import models
 
-from posts.validations import validate_file_type
+
+
+def validate_file_type(file):
+    allowed_mime_types = ['image/jpeg', 'video/mp4']  
+    from django.core.exceptions import ValidationError
+    import magic
+    mime = magic.Magic(mime=True)
+    detected_type = mime.from_buffer(file.read(1024))
+    file.seek(0)
+    
+    if detected_type not in allowed_mime_types:
+        raise ValidationError("The file must be an image or video.")
 
 
 class Post(models.Model):

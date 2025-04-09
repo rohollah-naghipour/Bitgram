@@ -1,7 +1,30 @@
 from django.conf import settings
 from django.db import models
 
-from posts.validations import validate_file_type
+def validate_file_type(value,     
+                       allowed_file_types=['image/jpeg', 
+                                           #'image/png',  
+                                           'image/gif',  
+                                           'video/mp4',   
+                                           'video/x-msvideo', 
+                                           'video/x-matroska', 
+                                           'video/quicktime'
+                                            ]):
+    
+    import magic
+    from django.core.exceptions import ValidationError
+    try:
+        mime = magic.Magic(mime=True)
+        detected_type = mime.from_file(value)
+        
+        if detected_type in allowed_file_types:
+            return True
+        else:
+            raise ValidationError("Unsupported file extension.")
+    except Exception:
+        return False
+
+
 
 
 class Post(models.Model):

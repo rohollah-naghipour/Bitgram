@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from posts.validations import validate_file_type
-
 
 class Post(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -23,8 +21,7 @@ class Post(models.Model):
 
 class PostFile(models.Model):
     post = models.ForeignKey(to='posts.Post', on_delete=models.CASCADE)
-    file = models.FileField(upload_to= 'file/post_file', 
-                            validators=[validate_file_type])
+    file = models.FileField(upload_to= 'file/post_file')
     created_time = models.DateTimeField(auto_now_add=True)
     updated_time = models.DateTimeField(auto_now=True)
 

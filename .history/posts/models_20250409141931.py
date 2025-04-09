@@ -4,6 +4,7 @@ from django.db import models
 from posts.validations import validate_file_type
 
 
+
 class Post(models.Model):
     user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
