@@ -18,7 +18,11 @@ class PostListView(APIView):
 class PostFileView(APIView):
     def get(self, request):
         files = PostFile.objects.all()
+        print(files)
         serializer = PostFileSerializer(files, many = True)
         return Response(serializer.data)   
+
+
+
 
 

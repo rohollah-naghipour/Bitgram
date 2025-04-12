@@ -18,7 +18,7 @@ class PostFileSerializer(serializers.ModelSerializer):
         model = PostFile
         fields = ['file', 'created_time']
 
-        #extra_kwargs = {
-            #'file': {"read_only": True},
-            #'created_time': {'read_only': True}
-        #}
+        extra_kwargs = {
+            'file': {"read_only": True},
+            'created_time': {'read_only': True}
+        }

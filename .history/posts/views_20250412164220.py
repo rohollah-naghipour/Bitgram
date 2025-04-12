@@ -22,3 +22,6 @@ class PostFileView(APIView):
         return Response(serializer.data)   
 
 
+
+
+
