@@ -8,6 +8,14 @@ from rest_framework.permissions import IsAuthenticated
 from posts.models import *
 from posts.serializers import PostSerializers
 
+class PostListView(APIView):
+    def get(self, request):
+        posts = Post.objects.all()
+        serializer = PostSerializers(posts, many= True)
+        return Response(serializer.data)
+
+
+
 
 
 

@@ -5,8 +5,12 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 
-from posts.models import *
-from posts.serializers import PostSerializers
+
+class PostListView(APIView):
+    def get(self, request):
+        pass
+
+
 
 
 
