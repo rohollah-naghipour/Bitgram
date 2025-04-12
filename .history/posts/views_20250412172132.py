@@ -12,16 +12,9 @@ class PostListView(APIView):
     def get(self, request):
         posts = Post.objects.all()
         files = PostFile.objects.all()
-        serializer_1 =  PostSerializers(posts, many= True)
-        serializer_2 = PostFileSerializer(files, many = True)
-        return Response({
-            'posts': serializer_1.data,
-            'files': serializer_2.data,
-            #'posts': serializer_1(posts, many=True),
-            #'files': serializer_2(files, many=True),
-        })
-
-
+        serializer_1 = PostFileSerializer(files, many = True)
+        serializer_2 = PostSerializers(posts, many= True)
+        return Response(serializer_1.data, serializer_2.data)
 
 
 class PostFileView(APIView):

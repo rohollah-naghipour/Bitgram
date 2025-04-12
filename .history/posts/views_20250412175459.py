@@ -17,6 +17,7 @@ class PostListView(APIView):
         return Response({
             'posts': serializer_1.data,
             'files': serializer_2.data,
+
             #'posts': serializer_1(posts, many=True),
             #'files': serializer_2(files, many=True),
         })
