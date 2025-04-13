@@ -84,7 +84,6 @@ class CommentView(APIView):
         if serializer.is_valid(raise_exception=True):
             serializer.sava(post = post)
             return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(status = status.HTTP_400_BAD_REQUEST)
 
 
 

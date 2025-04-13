@@ -73,19 +73,6 @@ class CommentView(APIView):
             return Response(status = status.HTTP_404_NOT_FOUND)
         serializer = CommentSerializers(comment)
         return Response(serializer.data, status = status.HTTP_200_OK)
-    
-    def post(self, request, post_pk):
-        try: 
-            post = Post.object.get(pk = post_pk)
-        except Post.DoesNotExist:
-            return Response(status = status.HTTP_404_NOT_FOUND)
-        
-        serializer = CommentSerializers(request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.sava(post = post)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(status = status.HTTP_400_BAD_REQUEST)
-
 
 
 
