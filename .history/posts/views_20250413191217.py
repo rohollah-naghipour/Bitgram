@@ -26,13 +26,13 @@ class PostListView(APIView):
 class SinglePostView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request ,post_pk):
-        try:
-            post = Post.objects.get(pk=post_pk)
-        except Post.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializer = PostSerializers(post)
-        return Response(serializer.data)
+    #def get(self, request ,post_pk):
+        #try:
+            #post = Post.objects.get(pk=post_pk)
+        #except Post.DoesNotExist:
+            #return Response(status=status.HTTP_404_NOT_FOUND)
+        #serializer = PostSerializers(post)
+        #return Response(serializer.data)
 
     def post(self, request):
         print("request.data: ", request.data)

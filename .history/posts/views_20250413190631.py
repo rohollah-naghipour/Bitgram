@@ -34,6 +34,13 @@ class SinglePostView(APIView):
         serializer = PostSerializers(post)
         return Response(serializer.data)
 
+    #def post(self, request):
+        #serializer = PostSerializers(data=request.data)
+        #if serializer.is_valid(raise_exception=True):
+            #serializer.save(user = request.user)
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(status = status.HTTP_400_BAD_REQUEST) 
+
     def post(self, request):
         print("request.data: ", request.data)
         serializer = PostSerializers(data=request.data)
@@ -61,14 +68,3 @@ class PostFileListView(APIView):
         serializer = PostFileSerializer(files, many = True)
         return Response(serializer.data)   
 
-
-
-
-
-
-    #def post(self, request):
-        #serializer = PostSerializers(data=request.data)
-        #if serializer.is_valid(raise_exception=True):
-            #serializer.save(user = request.user)
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
-        #return Response(status = status.HTTP_400_BAD_REQUEST) 

@@ -23,10 +23,19 @@ class PostListView(APIView):
             #'files': serializer_2(files, many=True),
         })
 
+
+class PostFileListView(APIView):
+    def get(self, request):
+        files = PostFile.objects.all()
+        serializer = PostFileSerializer(files, many = True)
+        return Response(serializer.data)   
+
+
+
 class SinglePostView(APIView):
     permission_classes = [IsAuthenticated]
-
-    def get(self, request ,post_pk):
+    
+    def get(self, request, post_pk):
         try:
             post = Post.objects.get(pk=post_pk)
         except Post.DoesNotExist:
@@ -34,14 +43,6 @@ class SinglePostView(APIView):
         serializer = PostSerializers(post)
         return Response(serializer.data)
 
-    def post(self, request):
-        print("request.data: ", request.data)
-        serializer = PostSerializers(data=request.data)
-        print("serializer.data: ", serializer.data)        
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class User_Own_Post(APIView):
     permission_classes = [IsAuthenticated]
@@ -53,22 +54,3 @@ class User_Own_Post(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = PostSerializers(post)
         return Response(serializer.data)
-
-
-class PostFileListView(APIView):
-    def get(self, request):
-        files = PostFile.objects.all()
-        serializer = PostFileSerializer(files, many = True)
-        return Response(serializer.data)   
-
-
-
-
-
-
-    #def post(self, request):
-        #serializer = PostSerializers(data=request.data)
-        #if serializer.is_valid(raise_exception=True):
-            #serializer.save(user = request.user)
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
-        #return Response(status = status.HTTP_400_BAD_REQUEST) 

@@ -35,13 +35,13 @@ class SinglePostView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        print("request.data: ", request.data)
         serializer = PostSerializers(data=request.data)
-        print("serializer.data: ", serializer.data)        
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+        if serializer.is_valid:
+            serializer.save(user = request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(status=status.HTTP_400_BAD_REQUEST) 
+
+
 
 class User_Own_Post(APIView):
     permission_classes = [IsAuthenticated]
@@ -61,14 +61,3 @@ class PostFileListView(APIView):
         serializer = PostFileSerializer(files, many = True)
         return Response(serializer.data)   
 
-
-
-
-
-
-    #def post(self, request):
-        #serializer = PostSerializers(data=request.data)
-        #if serializer.is_valid(raise_exception=True):
-            #serializer.save(user = request.user)
-            #return Response(serializer.data, status=status.HTTP_201_CREATED)
-        #return Response(status = status.HTTP_400_BAD_REQUEST) 
