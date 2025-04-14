@@ -92,7 +92,6 @@ class CommentView(APIView):
 
 
 class LikeView(APIView):  
-    permission_classes = [IsAuthenticated]
     def get(self, request, post_pk):
         try:
             post = Post.objects.get(pk = post_pk)

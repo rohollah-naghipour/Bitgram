@@ -92,25 +92,13 @@ class CommentView(APIView):
 
 
 class LikeView(APIView):  
-    permission_classes = [IsAuthenticated]
     def get(self, request, post_pk):
         try:
             post = Post.objects.get(pk = post_pk)
             likes = post.likes.filter(is_liked=True).count()
         except Post.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
-        return Response({"count of likes for this post": likes})
+        serializer = LikeSerializers(likes)
+        #print(serializer.data)
+        return Response(serializer.data, status = status.HTTP_200_OK)  
 
-    def post(self, request, post_pk):
-        try:
-            post = Post.objects.get(pk=post_pk)
-        except Post.DoesNotExist:
-            return Response(status = status.HTTP_404_NOT_FOUND)
-        serializer = LikeSerializers(data = request.data)
-        if serializer.is_valid():
-            serializer.save(post = post, user = request.user)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(status = status.HTTP_400_BAD_REQUEST)
-
-
-            

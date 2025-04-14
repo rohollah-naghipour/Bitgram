@@ -5,9 +5,6 @@ from rest_framework import status
 from rest_framework.permissions import BasePermission, IsAuthenticated, SAFE_METHODS
 
 
-from django.db.models import Count
-from django.db.models import Q
-
 from posts.models import *
 from posts.serializers import *
 
@@ -89,28 +86,14 @@ class CommentView(APIView):
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(status = status.HTTP_400_BAD_REQUEST)
     
-
-
-class LikeView(APIView):  
-    permission_classes = [IsAuthenticated]
+     
+class LikeView(APIView):
     def get(self, request, post_pk):
         try:
-            post = Post.objects.get(pk = post_pk)
-            likes = post.likes.filter(is_liked=True).count()
+            likes = Post.likes.filter(is_liked=True).count()
+            return Response({'likes': likes})
         except Post.DoesNotExist:
             return Response(status = status.HTTP_404_NOT_FOUND)
-        return Response({"count of likes for this post": likes})
+        #serializer = LikeSerializers(like)
+        #return Response(serializer.data, status = status.HTTP_200_OK)  
 
-    def post(self, request, post_pk):
-        try:
-            post = Post.objects.get(pk=post_pk)
-        except Post.DoesNotExist:
-            return Response(status = status.HTTP_404_NOT_FOUND)
-        serializer = LikeSerializers(data = request.data)
-        if serializer.is_valid():
-            serializer.save(post = post, user = request.user)
-            return Response(serializer.data, status = status.HTTP_201_CREATED)
-        return Response(status = status.HTTP_400_BAD_REQUEST)
-
-
-            

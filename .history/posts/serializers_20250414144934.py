@@ -9,12 +9,12 @@ from posts.models import Post, PostFile, Comment, Like
 class LikeSerializers(serializers.ModelSerializer):
     class Meta:
         model = Like
-        fields =  ['user', 'post', 'is_liked'] 
+        fields =  ['user', 'post', 'is_liked', 'created_time'] 
         extra_kwargs = {
             'user': {"read_only": True},
-            'post': {"read_only": True},
-            'is_liked': {'required': False}
+            'post': {"read_only": True}
         }
+
 
 
 class CommentSerializers(serializers.ModelSerializer):
