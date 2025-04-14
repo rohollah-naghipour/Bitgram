@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from friendships.models import Friendship
+from friendship.models import Friendship
 
 
 @admin.register(Friendship)
