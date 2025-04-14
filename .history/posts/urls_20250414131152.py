@@ -10,7 +10,6 @@ urlpatterns = [
 
     path('User_Own_Post/<int:post_pk>/', User_Own_Post.as_view(), name='User-Own-Post'),
     path('post/<int:post_pk>/', SinglePostView.as_view(), name='post-detail'),
-    path('post/', SinglePostView.as_view(), name='post'),
 
     path('post/<int:post_pk>/comments/', CommentView.as_view(), name='comment'),
     path('post/<int:post_pk>/likes/', LikeView.as_view(), name='like'),

@@ -12,11 +12,15 @@ class PostListView(APIView):
     def get(self, request):
         posts = Post.objects.all()
         files = PostFile.objects.all()
+        print(request.user)
+        print(request.auth)
         serializer_1 =  PostSerializers(posts, many= True)
         serializer_2 = PostFileSerializer(files, many = True)
         return Response({
             'posts': serializer_1.data,
             'files': serializer_2.data,
+            #'posts': serializer_1(posts, many=True),
+            #'files': serializer_2(files, many=True),
         })
 
 class SinglePostView(APIView):
@@ -29,9 +33,11 @@ class SinglePostView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         serializer = PostSerializers(post)
         return Response(serializer.data)
-    
+
     def post(self, request):
+        print("request.data: ", request.data)
         serializer = PostSerializers(data=request.data)
+        print("serializer.data: ", serializer.data)        
         if serializer.is_valid(raise_exception=True):
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -59,13 +65,7 @@ class PostFileListView(APIView):
 
 
 class CommentView(APIView):
-    permission_classes = [IsAuthenticated]
-    def get_post(self, post_pk):
-        try:
-            return Post.objects.get(pk=post_pk)
-        except Post.DoesNotExist:
-            return False
-        
+
     def get(self, request, post_pk):
         try:
             comment = Comment.objects.get(pk = post_pk)
@@ -75,18 +75,18 @@ class CommentView(APIView):
         return Response(serializer.data, status = status.HTTP_200_OK)
     
     def post(self, request, post_pk):
-        post = self.get_post(post_pk)  
-        print(post)
-        if not post:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+        try: 
+            post = Post.object.get(pk = post_pk)
+        except Post.DoesNotExist:
+            return Response(status = status.HTTP_404_NOT_FOUND)
         
-        serializer = CommentSerializers(data = request.data)
-        if serializer.is_valid():
-            serializer.save(post = post, user = request.user)
+        serializer = CommentSerializers(request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.sava(post = post)
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(status = status.HTTP_400_BAD_REQUEST)
-    
-     
+
+
 class LikeView(APIView):
     def get(self, request, post_pk):
         try:
@@ -96,3 +96,11 @@ class LikeView(APIView):
         serializer = LikeSerializers(like)
         return Response(serializer.data, status = status.HTTP_200_OK)  
 
+
+
+    #def post(self, request):
+        #serializer = PostSerializers(data=request.data)
+        #if serializer.is_valid(raise_exception=True):
+            #serializer.save(user = request.user)
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(status = status.HTTP_400_BAD_REQUEST) 

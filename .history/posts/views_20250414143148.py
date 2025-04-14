@@ -80,6 +80,8 @@ class CommentView(APIView):
         if not post:
             return Response(status=status.HTTP_404_NOT_FOUND)
         
+        print("request.data", request.data)
+        print(request.databases)
         serializer = CommentSerializers(data = request.data)
         if serializer.is_valid():
             serializer.save(post = post, user = request.user)
@@ -96,3 +98,11 @@ class LikeView(APIView):
         serializer = LikeSerializers(like)
         return Response(serializer.data, status = status.HTTP_200_OK)  
 
+
+
+    #def post(self, request):
+        #serializer = PostSerializers(data=request.data)
+        #if serializer.is_valid(raise_exception=True):
+            #serializer.save(user = request.user)
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(status = status.HTTP_400_BAD_REQUEST) 

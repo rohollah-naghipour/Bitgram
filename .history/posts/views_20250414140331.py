@@ -76,17 +76,27 @@ class CommentView(APIView):
     
     def post(self, request, post_pk):
         post = self.get_post(post_pk)  
-        print(post)
         if not post:
             return Response(status=status.HTTP_404_NOT_FOUND)
-        
+
+        print(request.data)
         serializer = CommentSerializers(data = request.data)
-        if serializer.is_valid():
-            serializer.save(post = post, user = request.user)
+        if serializer.is_valid(raise_exception=True):
+            serializer.sava(post = post)
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         return Response(status = status.HTTP_400_BAD_REQUEST)
-    
-     
+
+    #def post(self, request, post_pk):
+        #post = self.get_post(post_pk)
+        #if not post:
+            #return Response(status=status.HTTP_404_NOT_FOUND)
+        #serializer = CommentSerializer(data=request.data)
+        #if serializer.is_valid(raise_exception=True):
+            #serializer.save(post=post, user=request.user)
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class LikeView(APIView):
     def get(self, request, post_pk):
         try:
@@ -96,3 +106,11 @@ class LikeView(APIView):
         serializer = LikeSerializers(like)
         return Response(serializer.data, status = status.HTTP_200_OK)  
 
+
+
+    #def post(self, request):
+        #serializer = PostSerializers(data=request.data)
+        #if serializer.is_valid(raise_exception=True):
+            #serializer.save(user = request.user)
+            #return Response(serializer.data, status=status.HTTP_201_CREATED)
+        #return Response(status = status.HTTP_400_BAD_REQUEST) 

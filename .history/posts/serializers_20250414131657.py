@@ -16,11 +16,7 @@ class LikeSerializers(serializers.ModelSerializer):
 class CommentSerializers(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['user','post', 'text', 'is_approved']
-        extra_kwargs = {
-            'user': {"read_only": True},
-            'post': {"read_only": True}
-        }
+        fields = ['user','post', 'text', 'is_approved', 'created_time']
 
 
 
