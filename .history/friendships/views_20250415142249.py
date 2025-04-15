@@ -13,12 +13,6 @@ from friendships.serializers import UserListSerializer
 User = get_user_model()
 
 
-class UserListView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        
-        users = User.objects.filter(is_superuser= False,
-                                    is_staff=False, is_active=True)
-        serializer = UserListSerializer(users, many=True)
-        return Response(serializer.data, status = status.HTTP_200_OK)
+
+

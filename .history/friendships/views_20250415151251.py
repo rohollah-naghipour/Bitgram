@@ -20,5 +20,6 @@ class UserListView(APIView):
         
         users = User.objects.filter(is_superuser= False,
                                     is_staff=False, is_active=True)
+        print(users.query)
         serializer = UserListSerializer(users, many=True)
         return Response(serializer.data, status = status.HTTP_200_OK)

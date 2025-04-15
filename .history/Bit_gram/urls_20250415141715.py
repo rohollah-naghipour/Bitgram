@@ -5,9 +5,6 @@ from django.conf.urls.static import static
 
 from users.urls import *
 from posts.urls import *
-from friendships.urls import *
-
-from .local_settings import *
 
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView
 
@@ -21,7 +18,6 @@ urlpatterns = [
     path('', include('users.urls')),
     path('', include('posts.urls')),
     path('', include('posts.urls')),
-    path('', include('friendships.urls')), 
 ]
 
 
