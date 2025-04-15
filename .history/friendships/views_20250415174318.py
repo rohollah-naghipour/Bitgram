@@ -37,5 +37,4 @@ class RequestView(APIView):
         return(Response({"detail": "Request sent"}, status = status.HTTP_200_OK))
         
 
- 
-      
+

@@ -24,18 +24,3 @@ class UserListView(APIView):
         return Response(serializer.data, status = status.HTTP_200_OK)
 
 
-class RequestView(APIView):
-    def post(self, request):
-        user_id = request.data.get('user')
-        try:
-            user = User.objects.get(pk = user_id)
-        except User.DoesNotExist:
-            return(Response(status = status.HTTP_404_NOT_FOUND))
-        
-        Friendship.objects.create(request_from = request.user, request_to = user)
-
-        return(Response({"detail": "Request sent"}, status = status.HTTP_200_OK))
-        
-
- 
-      
