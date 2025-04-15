@@ -44,14 +44,14 @@ class SendFriendRequestView(APIView):
                              status=status.HTTP_400_BAD_REQUEST)
 
         Friendship.objects.create(request_from = request.user, request_to = user)
-        return(Response({"detail": "Request sent"}, status = status.HTTP_200_OK)) 
+        return(Response({"detail": "Request sent_2"}, status = status.HTTP_200_OK)) 
 
 
 
 
 
-
-
+   
+      
 #class RequestView(APIView):
     #def post(self, request):
         #user_id = request.data.get('user')
