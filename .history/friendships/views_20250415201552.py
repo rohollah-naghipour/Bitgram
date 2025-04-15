@@ -17,6 +17,7 @@ class UserListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        print(request.user)
         users = User.objects.filter(is_superuser= False,
                                     is_staff=False, is_active=True)
         serializer = UserListSerializer(users, many=True)
@@ -51,20 +52,23 @@ class SendFriendRequestView(APIView):
 
 class RequestsListView(APIView):
     def get(self, request):
-        try:   
-            requests = Friendship.objects.filter(request_to = request.user, is_accepted = False)
-        except Friendship.DoesNotExist:
-            return(Response(status = status.HTTP_404_NOT_FOUND))       
+        
+     
+        #requests = Friendship.objects.filter(request_to = request.user, is_accepted = False)
+        #requests = Friendship.objects.all()
+        requests = Friendship.objects.filter(request_to = request.user, is_accepted = False)
         list_users = []
         for fr in requests:
             list_users.append(fr.request_from)
-        
-        serializer = UserListSerializer(list_users, many=True)
-        return(Response(serializer.data, status = status.HTTP_200_OK))
+
+        print(list_users)
+        serializer = FriendshipSerializer(requests, many=True)
+        return(Response(serializer.data))
+
+
+
     
-        #serializer_2 = FriendshipSerializer(requests, many=True)
-        #return(Response({'serializer_1': serializer_1.data,
-                         #'serializer_2': serializer_2.data}))   
+
 
 
 #class RequestView(APIView):

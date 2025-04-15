@@ -18,6 +18,5 @@ class UserListSerializer(serializers.ModelSerializer):
 class FriendshipSerializer(serializers.ModelSerializer):
     class Meta:
         model = Friendship
+        #fields = '__all__'
         fields = ['request_from','is_accepted']
-
-        
