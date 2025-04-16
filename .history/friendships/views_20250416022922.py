@@ -67,7 +67,10 @@ class RequestsListView(APIView):
         serializer = UserListSerializer(list_users, many=True)
         return(Response(serializer.data, status = status.HTTP_200_OK))
     
-       
+        #serializer_2 = FriendshipSerializer(requests, many=True)
+        #return(Response({'serializer_1': serializer_1.data,
+                         #'serializer_2': serializer_2.data}))   
+
 #difference in querying get == one instance with filter == instance list
 class AcceptViews(APIView):
     
@@ -86,6 +89,22 @@ class AcceptViews(APIView):
 
         return Response({"detail": "Friend request accepted"})
                       
+
+
+class FriendListView(APIView):
+    def get(self, request):
+        friends = Friendship.objects.filter(
+            Q(request_from = request.user) | Q(request_to = request.user)
+        )
+        
+        list_user = []
+        print(request.user)
+        for i in friends:
+            list_user.append(i.request_from)
+        
+        serializer = UserListSerializer(list_user, many = True)     
+        return(Response(serializer.data, status = status.HTTP_200_OK))    
+
 
 
 

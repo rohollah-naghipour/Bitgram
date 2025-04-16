@@ -67,7 +67,10 @@ class RequestsListView(APIView):
         serializer = UserListSerializer(list_users, many=True)
         return(Response(serializer.data, status = status.HTTP_200_OK))
     
-       
+        #serializer_2 = FriendshipSerializer(requests, many=True)
+        #return(Response({'serializer_1': serializer_1.data,
+                         #'serializer_2': serializer_2.data}))   
+
 #difference in querying get == one instance with filter == instance list
 class AcceptViews(APIView):
     

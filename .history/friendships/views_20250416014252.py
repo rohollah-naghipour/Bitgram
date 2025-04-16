@@ -67,15 +67,18 @@ class RequestsListView(APIView):
         serializer = UserListSerializer(list_users, many=True)
         return(Response(serializer.data, status = status.HTTP_200_OK))
     
-       
-#difference in querying get == one instance with filter == instance list
+        #serializer_2 = FriendshipSerializer(requests, many=True)
+        #return(Response({'serializer_1': serializer_1.data,
+                         #'serializer_2': serializer_2.data}))   
+
+
+
 class AcceptViews(APIView):
     
     def post(self, request):
         res_pk = request.data.get('user')
         try:
             user = User.objects.get(pk = res_pk)
-            print(user)
             requests = Friendship.objects.get(request_from=user
                                               ,request_to=request.user,is_accepted=False)
         except (User.DoesNotExist, Friendship.DoesNotExist):
@@ -86,6 +89,12 @@ class AcceptViews(APIView):
 
         return Response({"detail": "Friend request accepted"})
                       
+
+
+class FriendListView(APIView):
+    def get(self, request):
+        pass
+        #friends = Friendship.objects.ss
 
 
 

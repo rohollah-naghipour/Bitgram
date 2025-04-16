@@ -67,7 +67,10 @@ class RequestsListView(APIView):
         serializer = UserListSerializer(list_users, many=True)
         return(Response(serializer.data, status = status.HTTP_200_OK))
     
-       
+        #serializer_2 = FriendshipSerializer(requests, many=True)
+        #return(Response({'serializer_1': serializer_1.data,
+                         #'serializer_2': serializer_2.data}))   
+
 #difference in querying get == one instance with filter == instance list
 class AcceptViews(APIView):
     
@@ -88,6 +91,44 @@ class AcceptViews(APIView):
                       
 
 
+class FriendListView_2(APIView):
+    
+    def get(self, request):
+        friends = Friendship.objects.filter(
+            Q(request_from = request.user) | Q(request_to = request.user) & 
+            Q(is_accepted=True) 
+        )
+        list_user = []
+        print(request.user)
+        
+        for i in friends:
+            list_user.append(i.request_from)
+        
+        serializer = UserListSerializer(list_user, many = True)     
+        return(Response(serializer.data, status = status.HTTP_200_OK))    
+
+
+
+
+class FriendListView(APIView):
+    def get(self, request):
+        user = request.user  
+        try:
+            friends_sent = Friendship.objects.filter(request_from=user,
+                                                  is_accepted=True).values_list('request_to', flat=True)
+
+            friends_received = Friendship.objects.filter(request_to=user,
+                                                      is_accepted=True).values_list('request_from', flat=True)
+        except Friendship.DoesNotExist:
+                return Response({'error': 'Object not found'}, status=status.HTTP_404_NOT_FOUND)  
+
+        friend_ids = set(list(friends_sent) + list(friends_received))
+
+        friends = User.objects.filter(id__in=friend_ids).exclude(id=user.id)
+
+        serializer = UserListSerializer(friends, many=True)
+        return Response(serializer.data)
+    
 
 
 #class RequestView(APIView):

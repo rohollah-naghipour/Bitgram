@@ -33,12 +33,10 @@ class SendFriendRequestView(APIView):
 
         user = User.objects.get(pk = user_id)
         
-        if Friendship.objects.filter(request_from=request.user,
-                                      request_to=user).exists():
+        if Friendship.objects.filter(request_from=request.user, request_to=user).exists():
             return Response({'message': 'Friend request has already been sent'},
                              status=status.HTTP_409_CONFLICT)
-        elif Friendship.objects.filter(request_from=user,
-                                        request_to=request.user).exists():
+        elif Friendship.objects.filter(request_from=user, request_to=request.user).exists():
             return Response({'message':'You have already received'
                              'a friend request from this user'}, 
                                  status=status.HTTP_409_CONFLICT)
@@ -52,12 +50,9 @@ class SendFriendRequestView(APIView):
 
 
 class RequestsListView(APIView):
-    permission_classes = [IsAuthenticated]
-
     def get(self, request):
         try:   
-            requests = Friendship.objects.filter(request_to = request.user,
-                                                  is_accepted = False)
+            requests = Friendship.objects.filter(request_to = request.user, is_accepted = False)
         except Friendship.DoesNotExist:
             return(Response(status = status.HTTP_404_NOT_FOUND))       
         list_users = []
@@ -67,25 +62,32 @@ class RequestsListView(APIView):
         serializer = UserListSerializer(list_users, many=True)
         return(Response(serializer.data, status = status.HTTP_200_OK))
     
-       
-#difference in querying get == one instance with filter == instance list
+        #serializer_2 = FriendshipSerializer(requests, many=True)
+        #return(Response({'serializer_1': serializer_1.data,
+                         #'serializer_2': serializer_2.data}))   
+
+
+
 class AcceptViews(APIView):
     
     def post(self, request):
         res_pk = request.data.get('user')
         try:
             user = User.objects.get(pk = res_pk)
-            print(user)
-            requests = Friendship.objects.get(request_from=user
-                                              ,request_to=request.user,is_accepted=False)
+            requests = Friendship.objects.get(request_from = user, requests_to=request.user, is_accepted = False)
         except (User.DoesNotExist, Friendship.DoesNotExist):
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
+            return(Response(status = status.HTTP_404_NOT_FOUND))
+         
         requests.is_accepted = True
-        requests.save()
-
+        Friendship.save()
         return Response({"detail": "Friend request accepted"})
                       
+
+
+        
+
+
+
 
 
 
