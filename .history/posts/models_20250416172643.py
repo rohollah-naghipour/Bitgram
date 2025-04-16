@@ -14,7 +14,6 @@ class Post(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'Posts'
         verbose_name = 'Post'
         verbose_name_plural = 'Posts'
 
@@ -30,8 +29,6 @@ class PostFile(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     class Meta:
-        
-        db_table = 'PostFiles'
         verbose_name = 'Post File'
         verbose_name_plural = 'Post Files'
 
@@ -44,7 +41,6 @@ class Like(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'Likes'
         verbose_name = 'Like'
         verbose_name_plural = 'Likes'
 
@@ -58,7 +54,6 @@ class Comment(models.Model):
     updated_time = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'Comments'
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
 

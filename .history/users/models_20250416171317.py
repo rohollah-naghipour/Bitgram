@@ -2,10 +2,10 @@ from django.db import models
 from django.conf import settings
 
 class Country(models.Model):
-    name = models.CharField(max_length=55)
-    add = models.CharField(max_length=10)
-    is_active = models.BooleanField(default=True)
-    created_time = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=55),
+    add = models.CharField(max_length=10),
+    is_active = models.BooleanField(default=True),
+    created_time = models.DateTimeField(auto_now_add=True),
     updated_time = models.DateTimeField(auto_now=True)
     
     
@@ -21,10 +21,10 @@ class Country(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(to=settings.AUTH_USER_MODEL,
-                                on_delete=models.CASCADE)
-    country = models.ForeignKey(to=Country, on_delete=models.CASCADE,
-                                related_name='Countries')
-    phone_number = models.BigIntegerField(blank=True, null=True, unique=True)
+                                on_delete=models.CASCADE),
+    country = models.ForeignKey(to=Country, on_delete=models.SET_NULL,
+                                related_name='Countries'), 
+    phone_number = models.BigIntegerField(blank=True, null=True, unique=True),
     avatar = models.ImageField(blank=True, null=True, upload_to='profile_avatars/')
 
     class meta:
@@ -56,11 +56,5 @@ class Device(models.Model):
     device_model = models.CharField('device model', max_length=50, blank=True)
     app_version = models.CharField('app version', max_length=20, blank=True)
     created_time = models.DateTimeField(auto_now_add=True)
-    
-    class meta:
-        db_table = 'Devices'
-        verbose_name = ('Devices')
-        verbose_name_plural = ('Devices')
-
 
 

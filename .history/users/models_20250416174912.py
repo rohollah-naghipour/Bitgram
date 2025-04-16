@@ -22,7 +22,7 @@ class Country(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(to=settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE)
-    country = models.ForeignKey(to=Country, on_delete=models.CASCADE,
+    country = models.ForeignKey(to=Country, on_delete=models.SET_NULL,
                                 related_name='Countries')
     phone_number = models.BigIntegerField(blank=True, null=True, unique=True)
     avatar = models.ImageField(blank=True, null=True, upload_to='profile_avatars/')
