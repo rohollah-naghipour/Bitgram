@@ -88,7 +88,7 @@ class AcceptViews(APIView):
         return Response({"detail": "Friend request accepted"})
     
                       
-# ***************************** FIX Bug query *************************************   
+# ***************************** FIX Bug  *************************************   
 class FriendListView(APIView):
     permission_classes = [IsAuthenticated]
     
@@ -110,8 +110,7 @@ class FriendListView(APIView):
 
         serializer = UserListSerializer(friends, many=True)
         return Response(serializer.data)
-    
-# ***************************** FIX Bug query *************************************   
+# ***************************** FIX Bug  *************************************   
 
 
 

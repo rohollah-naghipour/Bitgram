@@ -110,7 +110,6 @@ class FriendListView(APIView):
 
         serializer = UserListSerializer(friends, many=True)
         return Response(serializer.data)
-    
 # ***************************** FIX Bug query *************************************   
 
 
