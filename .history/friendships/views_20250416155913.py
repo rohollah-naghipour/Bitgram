@@ -87,7 +87,7 @@ class AcceptViews(APIView):
         return Response({"detail": "Friend request accepted"})
                       
 
-class FriendListView(APIView):
+class FriendListView_2(APIView):
     
     def get(self, request):
         friends = Friendship.objects.filter(
