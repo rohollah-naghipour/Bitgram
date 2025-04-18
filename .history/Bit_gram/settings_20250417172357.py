@@ -82,8 +82,8 @@ WSGI_APPLICATION = 'Bit_gram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb', 
-        'HOST': 'db',  
+        'NAME': 'mydb',  # با کوتیشن
+        'HOST': 'db',  # نام سرویس در docker-compose.yml
         'USER': 'myuser',
         'PASSWORD': 'mypassword',
         'PORT': '3306',
@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
