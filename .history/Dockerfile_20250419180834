@@ -1,0 +1,19 @@
+FROM python:3.8
+LABEL MAINTAINER="rohollah naghipour | rohollahnaghipour41@gmail.com"
+
+ENV PYTHONUNBUFFERED 1
+
+# Set working directory
+RUN mkdir /Bit_gram
+WORKDIR /Bit_gram
+COPY . /Bit_gram
+
+ADD requirements/requirements.txt /Bit_gram
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Collect static files
+RUN python manage.py collectstatic --no-input
+
+CMD ["gunicorn", "--chdir", "gunicorn.conf.py", "Bit_gram.wsgi:application"]
+

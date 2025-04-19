@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'Bit_gram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb', 
-        'HOST': 'db',  
-        'USER': 'myuser',
-        'PASSWORD': 'mypassword',
+        'NAME': 'mydb',  # یا هر نام دیتابیس دلخواه شما
+        'HOST': 'Bit_gram_mysql',
+        'USER': 'myuser',  # یا نام کاربری که در MySQL ایجاد کردید
+        'PASSWORD': 'mypassword',  # یا رمز عبور مربوط به کاربر
         'PORT': '3306',
     }
 }

@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+  Bit_gram_mysql:
+    image: mysql:5.7
+    container_name: Bit_gram_mysql
+    volumes:
+      - bit_gram_mysql_data:/var/lib/mysql/data
+    restart: always
+    env_file: .env
+    ports:
+      - "3306:3306"
+    networks:
+      - bit_gram_network
+
+  Bit_gram:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/Bit_gram
+      - bit_gram_static_volume:/Bit_gram/static
+      - bit_gram_files_volume:/Bit_gram/file/post_file/
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - Bit_gram_mysql
+    networks:
+      - bit_gram_network
+      - nginx_network
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/my_app.conf
+      - bit_gram_nginx_static_volume:/Bit_gram/static
+      - bit_gram_nginx_files_volume:/Bit_gram/file/post_file/
+    depends_on:
+      - Bit_gram
+    networks:
+      - nginx_network
+
+volumes:
+  Bit_gram_mysql:
+    external: true
+
+  Bit_gram_static_volume:
+    external: true
+
+  Bit_gram_files_volume:
+    external: true
+
+  Bit_gram_nginx_static_volume:
+    external: true
+
+  Bit_gram_nginx_files_volume:
+    external: true
+
+networks:
+  Bit_gram_network:
+    external: true
+
+  nginx_network:
+    external: true
+
+
+ 

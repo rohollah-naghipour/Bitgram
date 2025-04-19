@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'Bit_gram.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb', 
-        'HOST': 'db',  
-        'USER': 'myuser',
+        'NAME': 'mydb',  
+        'HOST': 'Bit_gram_mysql',
+        'USER': 'myuser',  
         'PASSWORD': 'mypassword',
         'PORT': '3306',
     }

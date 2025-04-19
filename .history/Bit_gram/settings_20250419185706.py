@@ -78,6 +78,7 @@ WSGI_APPLICATION = 'Bit_gram.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+from Bit_gram import .env
 
 DATABASES = {
     'default': {

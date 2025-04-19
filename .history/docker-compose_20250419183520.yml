@@ -4,35 +4,29 @@ services:
   
   Bit_gram_mysql:
     image: mysql:5.7
-    environment:
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
-      MYSQL_ROOT_PASSWORD: myrootpassword
     container_name: Bit_gram_mysql
     volumes:
       - Bit_gram_mysql:/var/lib/mysql/data
     restart : always  
-    
+    env_file: .env
     ports:
       - "3306:3306"
     networks:
       - Bit_gram_network
 
   Bit_gram:
-     build: .
-     context: .
-     dockerfile: ./Dockerfile  
-     volumes:
+    build: .
+    dockerfile: Dockerfile
+    volumes:
       - .:/Bit_gram
       - Bit_gram_static_volume:/Bit_gram/static
       - Bit_gram_files_Volume:/Bit_gram/file/post_file/
-     restart : always
-     ports: 
+    restart : always
+    ports: 
      - '8000:8000'
-     depends_on:
+    depends_on:
       - Bit_gram_mysql
-     networks:
+    networks:
      - Bit_gram_network
      - nginx_network
 
